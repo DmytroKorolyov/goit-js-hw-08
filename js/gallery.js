@@ -70,54 +70,121 @@ let instance;
 gallery.addEventListener('click', handleGalleryClick);
 
 function handleGalleryClick(event) {
-    event.preventDefault();
+  event.preventDefault();
 
-    const galleryItem = event.target.closest('.gallery-item');
+  const galleryItem = event.target.closest('.gallery-item');
 
-    if (!galleryItem) {
-        return;
-    }
-
-    const largeImageSrc = galleryItem.querySelector('.gallery-image').dataset.source;
-    const description = galleryItem.querySelector('.gallery-image');
-
-    instance = basicLightbox.create(`<img src="${largeImageSrc}" alt="${description}">
-    `);
-
+  if (galleryItem) {
+    const { large, description } = galleryItem.dataset;
+    instance = basicLightbox.create(`<img src="${large}" alt="${description}">`);
     instance.show();
-
-
+    
     document.addEventListener('keydown', handleKeyPress);
+  }
 }
 
 function handleKeyPress(event) {
-    if (event.code === 'Escape') {
-        instance.close(); 
-        document.removeEventListener('keydown', handleKeyPress);
-    }
+  if (event.code === 'Escape') {
+    instance.close();
+    document.removeEventListener('keydown', handleKeyPress);
+  }
 }
 
 function imagesTemplate() {
   return images
     .map(image => {
-        return `<li class="gallery-item">
-      <a class="gallery-link" href="#">
-        <img
-          class="gallery-image"
-          src="${image.preview}"
-          data-source="${image.original}"
-          alt="${image.description}"
-          width="360px" 
-          height="300px"
-        />
-      </a>    
-    </li>`;
+      return `<li class="gallery-item" data-large="${image.original}" data-description="${image.description}">
+        <a class="gallery-link" href="#">
+          <img
+            class="gallery-image"
+            src="${image.preview}"
+            data-source="${image.original}"
+            alt="${image.description}"
+            width="360px"
+            height="300px"
+          />
+        </a>
+      </li>`;
     })
     .join('\n');
 }
 
 const markup = imagesTemplate();
 gallery.innerHTML = markup;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const gallery = document.querySelector('.gallery');
+// let instance;
+
+// gallery.addEventListener('click', handleGalleryClick);
+
+// function handleGalleryClick(event) {
+//     event.preventDefault();
+
+//     const galleryItem = event.target.closest('.gallery-item');
+
+//     if (!galleryItem) {
+//         return;
+//     }
+
+//     const largeImageSrc = galleryItem.querySelector('.gallery-image').dataset.source;
+//     const description = galleryItem.querySelector('.gallery-image');
+
+//     instance = basicLightbox.create(`<img src="${largeImageSrc}" alt="${description}">
+//     `);
+
+//     instance.show();
+
+
+//     document.addEventListener('keydown', handleKeyPress);
+// }
+
+// function handleKeyPress(event) {
+//     if (event.code === 'Escape') {
+//         instance.close(); 
+//         document.removeEventListener('keydown', handleKeyPress);
+//     }
+// }
+
+// function imagesTemplate() {
+//   return images
+//     .map(image => {
+//         return `<li class="gallery-item">
+//       <a class="gallery-link" href="#">
+//         <img
+//           class="gallery-image"
+//           src="${image.preview}"
+//           data-source="${image.original}"
+//           alt="${image.description}"
+//           width="360px" 
+//           height="300px"
+//         />
+//       </a>    
+//     </li>`;
+//     })
+//     .join('\n');
+// }
+
+// const markup = imagesTemplate();
+// gallery.innerHTML = markup;
 
 
 
