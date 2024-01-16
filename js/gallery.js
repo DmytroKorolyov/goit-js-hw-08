@@ -64,94 +64,36 @@ const images = [
   },
 ];
 
-
-
-
-// const gallery = document.querySelector('.gallery');
-
-// gallery.addEventListener('click', handleGalleryClick);
-
-// function handleGalleryClick(event) {
-//   event.preventDefault();
-
-//   const target = event.target;
-//   const galleryItem = target.closest('.gallery-item');
-
-//   if (!galleryItem) {
-//     return;
-//   }
-
-//   const largeImageSrc = galleryItem.querySelector('.gallery-image').dataset.source;
-
-//   const instance = basicLightbox.create(`
-//     <img src="https://cdn.pixabay.com/photo/2019/05/17/04/35/lighthouse-4208843_1280.jpg">
-//   `);
-  
-//   instance.show();
-// }
-
-// function imagesTemplate() {
-//   return images
-//     .map(image => {
-//       return `<li class="gallery-item">
-//         <a class="gallery-link" href="${image.original}">
-//           <img
-//             class="gallery-image"
-//             src="${image.preview}"
-//             data-source="${image.original}"
-//             alt="${image.description}"
-//             width="360px" 
-//             height="300px"
-//           />
-//         </a>
-//       </li>`;
-//     })
-//     .join('\n');
-// }
-
-// const markup = imagesTemplate();
-// gallery.innerHTML = markup;
-
-
-
-
-
-
-
-
-
 const gallery = document.querySelector('.gallery');
-let instance = null;  // Додайте змінну для зберігання екземпляра модального вікна
+let instance;
 
 gallery.addEventListener('click', handleGalleryClick);
 
 function handleGalleryClick(event) {
     event.preventDefault();
 
-    const target = event.target;
-    const galleryItem = target.closest('.gallery-item');
+    const galleryItem = event.target.closest('.gallery-item');
 
     if (!galleryItem) {
         return;
     }
 
     const largeImageSrc = galleryItem.querySelector('.gallery-image').dataset.source;
-    const description = galleryItem.querySelector('.gallery-image').alt;
+    const description = galleryItem.querySelector('.gallery-image');
 
-    instance = basicLightbox.create(`
-        <img src="${largeImageSrc}" alt="${description}">
+    instance = basicLightbox.create(`<img src="${largeImageSrc}" alt="${description}">
     `);
 
     instance.show();
 
-    // Додайте прослуховування клавіатури тільки якщо відкрите модальне вікно
+
     document.addEventListener('keydown', handleKeyPress);
 }
 
 function handleKeyPress(event) {
     if (event.code === 'Escape') {
-        instance.close();  // Закриваємо модальне вікно при натисканні клавіші Escape
-        document.removeEventListener('keydown', handleKeyPress);  // Видаляємо обробник подій після закриття
+        instance.close(); 
+        document.removeEventListener('keydown', handleKeyPress);
     }
 }
 
@@ -176,54 +118,6 @@ function imagesTemplate() {
 
 const markup = imagesTemplate();
 gallery.innerHTML = markup;
-
-
-// const gallery = document.querySelector('.gallery');
-
-// gallery.addEventListener('click', handleGalleryClick);
-
-// function handleGalleryClick(event) {
-//     event.preventDefault();
-
-//     const target = event.target;
-//     const galleryItem = target.closest('.gallery-item');
-
-//     if (!galleryItem) {
-//         return;
-//     }
-
-//     const largeImageSrc = galleryItem.querySelector('.gallery-image').dataset.source;
-
-//     const instance = basicLightbox.create(`
-//         <img src="${largeImageSrc}">
-//     `);
-//     instance.show();  // Виправлено тут
-// }
-
-    
-    
-    
-// function imagesTemplate() {
-//   return images
-//     .map(image => {
-//         return `<li class="gallery-item">
-//       <a class="gallery-link"
-//       href="#">
-//     <img
-//     class="gallery-image"
-//       src="${image.preview}"
-//       data-source="${image.original}"
-//       alt="${image.description}"
-//       width="360px" 
-//       height="300px"
-//     />
-//     </a>    
-//   </li>`;
-//     })
-//     .join('\n');
-// }
-// const markup = imagesTemplate();
-// gallery.innerHTML = markup;
 
 
 
